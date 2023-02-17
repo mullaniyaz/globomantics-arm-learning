@@ -34,7 +34,7 @@ jobs:
         with:
           scope: subscription
           subscriptionId: ${{ env.subscriptionId}}
-          region: "East US"
+          region: "eastus"
           template: ./arm-templates/resourcegroup.json
           parameters: location=${{ env.location}}
             resourceGroupName=${{ env.resource_group_name}}
