@@ -33,7 +33,7 @@ jobs:
           template: ./arm-templates/resourcegroup.json
           parameters:
             location="eastus"
-            resourceGroupName= rg-githubactions
+            resourceGroupName=rg-githubactions
           deploymentName: rg-githubactions
 
       - name: Deploy storage account
