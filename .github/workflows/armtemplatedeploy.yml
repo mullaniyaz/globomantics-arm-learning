@@ -32,7 +32,7 @@ jobs:
           region: East US
           template: ./arm-templates/resourcegroup.json
           parameters:
-            location= "Central US"
+            location= Central US
             resourceGroupName= rg-githubactions
           deploymentName: rg-githubactions
 
