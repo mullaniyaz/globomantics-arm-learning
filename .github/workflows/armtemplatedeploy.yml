@@ -6,6 +6,11 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  resource_group_name: rg-githubactions
+  location: "Central US"
+  subscriptionId: 9f91d3ca-747b-4642-a795-c40a3d1f7bfd
+
 jobs:
   armDeploy:
     runs-on: ubuntu-latest
@@ -24,30 +29,30 @@ jobs:
       #     inlinescript: |
       #       az deployment sub create --location "eastus" --template-file ./arm-templates/resourcegroup.json
 
-      - name: Deploy Resource Group rg-githubactions
+      - name: Deploy Resource Group ${{ env.resource_group_name}}
         uses: Azure/arm-deploy@v1
         with:
           scope: subscription
-          subscriptionId: 9f91d3ca-747b-4642-a795-c40a3d1f7bfd
+          subscriptionId: ${{ env.subscriptionId}}
           region: East US
           template: ./arm-templates/resourcegroup.json
-          parameters: location="eastus"
-            resourceGroupName=rg-githubactions
-          deploymentName: rg-githubactions
+          parameters: location=${{ env.location}}
+            resourceGroupName=${{ env.resource_group_name}}
+          deploymentName: ${{ env.resource_group_name}}
 
       - name: Deploy storage account
         uses: Azure/arm-deploy@v1
         id: storageAccountDeploy
         with:
           scope: resourcegroup
-          resourceGroupName: rg-githubactions
-          subscriptionId: 9f91d3ca-747b-4642-a795-c40a3d1f7bfd
+          resourceGroupName: ${{ env.resource_group_name}}
+          subscriptionId: ${{ env.subscriptionId}}
           template: ./arm-templates/storageaccount.json
           parameters:
             #./arm-templates/storageaccount.parameters.json
             sku=Standard_LRS
             storageAccountName=globostg0812
-            location="Central US"
+            location=${{ env.location}}
           deploymentMode: incremental
 
       - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
@@ -56,10 +61,11 @@ jobs:
         uses: Azure/arm-deploy@v1
         with:
           scope: resourcegroup
-          resourceGroupName: rg-githubactions
-          subscriptionId: 9f91d3ca-747b-4642-a795-c40a3d1f7bfd
+          resourceGroupName: ${{ env.resource_group_name}}
+          subscriptionId: ${{ env.subscriptionId}}
           template: ./arm-templates/virtualmachine.json
           parameters:
             #./arm-templates/storageaccount.parameters.json
             adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
+            location=${{ env.location}}
           deploymentMode: incremental
