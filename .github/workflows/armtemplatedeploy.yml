@@ -31,8 +31,7 @@ jobs:
           subscriptionId: 9f91d3ca-747b-4642-a795-c40a3d1f7bfd
           region: East US
           template: ./arm-templates/resourcegroup.json
-          parameters:
-            location="eastus"
+          parameters: location="eastus"
             resourceGroupName=rg-githubactions
           deploymentName: rg-githubactions
 
@@ -44,7 +43,7 @@ jobs:
           resourceGroupName: rg-githubactions
           subscriptionId: 9f91d3ca-747b-4642-a795-c40a3d1f7bfd
           template: ./arm-templates/storageaccount.json
-          parameters: 
+          parameters:
             #./arm-templates/storageaccount.parameters.json
             sku=Standard_LRS
             storageAccountName=globostg0812
@@ -52,3 +51,16 @@ jobs:
           deploymentMode: incremental
 
       - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
+
+      - name: Deploy Virtual machine
+        uses: Azure/arm-deploy@v1
+        id: storageAccountDeploy
+        with:
+          scope: resourcegroup
+          resourceGroupName: rg-githubactions
+          subscriptionId: 9f91d3ca-747b-4642-a795-c40a3d1f7bfd
+          template: ./arm-templates/virtualmachine.json
+          parameters:
+            #./arm-templates/storageaccount.parameters.json
+            adminPassword="My$ecureP@ssword!"
+          deploymentMode: incremental
