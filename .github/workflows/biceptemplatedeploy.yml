@@ -15,7 +15,7 @@ jobs:
 
     env:
       resource_group_name: rg-bicep-azcli-githubactions
-      location: East US
+      location: Central US
 
     steps:
       - uses: actions/checkout@v2
