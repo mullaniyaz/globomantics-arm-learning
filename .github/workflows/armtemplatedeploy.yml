@@ -8,7 +8,7 @@ on:
 
 env:
   resource_group_name: rg-githubactions
-  location: eastus
+  location: East US
   subscriptionId: 9f91d3ca-747b-4642-a795-c40a3d1f7bfd
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
           subscriptionId: ${{ env.subscriptionId}}
           region: "eastus"
           template: ./arm-templates/resourcegroup.json
-          parameters: location=${{ env.location}}
+          parameters: location="${{ env.location}}"
             resourceGroupName=${{ env.resource_group_name}}
           deploymentName: ${{ env.resource_group_name}}
 
@@ -52,7 +52,7 @@ jobs:
             #./arm-templates/storageaccount.parameters.json
             sku=Standard_LRS
             storageAccountName=globostg0812
-            location=${{ env.location}}
+            location="${{ env.location}}"
           deploymentMode: incremental
 
       - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
@@ -65,5 +65,5 @@ jobs:
           subscriptionId: ${{ env.subscriptionId}}
           template: ./arm-templates/virtualmachine.json
           parameters: adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
-            location=${{ env.location}}
+            location="${{ env.location}}"
           deploymentMode: incremental
