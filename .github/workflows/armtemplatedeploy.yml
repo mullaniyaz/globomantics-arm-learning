@@ -8,7 +8,7 @@ on:
 
 env:
   resource_group_name: rg-githubactions
-  location: "eastus"
+  location: eastus
   subscriptionId: 9f91d3ca-747b-4642-a795-c40a3d1f7bfd
 
 jobs:
