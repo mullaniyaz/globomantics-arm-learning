@@ -60,7 +60,9 @@ jobs:
             location="${{ env.location}}"
           deploymentMode: incremental
 
-      - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
+      - run: |
+          echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
+          echo "UBUNTU_ADMIN_PASSWORD: ${{ secrets.UBUNTU_ADMIN_PASSWORD }}"
 
       - name: Deploy Virtual machine
         uses: Azure/arm-deploy@v1
@@ -119,7 +121,9 @@ jobs:
             location="${{ env.location}}"
           deploymentMode: incremental
 
-      - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
+      - run: |
+          echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
+          echo "UBUNTU_ADMIN_PASSWORD: ${{ secrets.UBUNTU_ADMIN_PASSWORD }}"
 
       - name: Deploy Virtual machine
         uses: Azure/arm-deploy@v1
