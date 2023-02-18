@@ -64,8 +64,6 @@ jobs:
           resourceGroupName: ${{ env.resource_group_name}}
           subscriptionId: ${{ env.subscriptionId}}
           template: ./arm-templates/virtualmachine.json
-          parameters:
-            #./arm-templates/storageaccount.parameters.json
-            adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
+          parameters: adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
             location=${{ env.location}}
           deploymentMode: incremental
